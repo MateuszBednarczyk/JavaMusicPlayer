@@ -16,7 +16,7 @@ public class PlayerPanel {
     private JProgressBar musicBar;
     private JButton pauseButton;
     private JButton resumeButton;
-    private JTree favouriteTracks;
+    JTree favouriteTracks;
     private Clip clip;
     long clipTimePosition;
 
@@ -72,19 +72,22 @@ public class PlayerPanel {
 
     private void playMusic() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
         if (clip == null) {
-            File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            clip = AudioSystem.getClip();
+            AudioInputStream audioStream = openFileAndPrepareClip();
             clip.open(audioStream);
         } else {
             clip.close();
-            File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            clip = AudioSystem.getClip();
+            AudioInputStream audioStream = openFileAndPrepareClip();
             clip.open(audioStream);
         }
         clip.start();
         timer();
+    }
+
+    private AudioInputStream openFileAndPrepareClip() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        clip = AudioSystem.getClip();
+        return audioStream;
     }
 
     public void loadFiles(String directory) {
