@@ -1,17 +1,22 @@
 import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class PlayerPanel {
     private JPanel playerPanel;
     private JButton playButton;
-    private JButton stopButton;
     private JProgressBar musicBar;
     private JButton pauseButton;
     private JButton resumeButton;
+    private JTree favouriteTracks;
     private Clip clip;
     long clipTimePosition;
 
@@ -44,13 +49,6 @@ public class PlayerPanel {
                 resume();
             }
         });
-
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopMusic();
-            }
-        });
     }
 
     private void pauseMusic() {
@@ -61,9 +59,11 @@ public class PlayerPanel {
     }
 
     private void resume() {
-        clip.setMicrosecondPosition(clipTimePosition);
-        clip.start();
-        timer();
+        if (!clip.isRunning()) {
+            clip.setMicrosecondPosition(clipTimePosition);
+            clip.start();
+            timer();
+        }
     }
 
     public JPanel getPlayerPanel() {
@@ -71,11 +71,28 @@ public class PlayerPanel {
     }
 
     private void playMusic() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("/Users/matthew/Downloads/example.wav"));
+        File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         clip = AudioSystem.getClip();
-        clip.open(audioStream);
-        clip.start();
-        timer();
+        if (!clip.isRunning()) {
+            clip.open(audioStream);
+            clip.start();
+            timer();
+        } else {
+            pauseMusic();
+        }
+    }
+
+    public void loadFiles(String directory) {
+        DefaultMutableTreeNode fileTree = new DefaultMutableTreeNode(directory);
+        File[] files = new File(directory).listFiles();
+        for (File file : files) {
+            if (file.getName().contains(".wav")) {
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(file);
+                fileTree.add(node);
+            }
+        }
+        favouriteTracks.setModel(new DefaultTreeModel(fileTree));
     }
 
     private void timer() {
@@ -90,9 +107,18 @@ public class PlayerPanel {
         timerThread.start();
     }
 
-    private void stopMusic() {
-        musicBar.setValue(0);
-        musicBar.setString("0:00 / 0:00");
-        clip.stop();
+    private void progressBarListener() {
+        Thread thread = new Thread() {
+            public void listen() {
+                while (clip != null) {
+                    musicBar.addChangeListener(new ChangeListener() {
+                        @Override
+                        public void stateChanged(ChangeEvent e) {
+                            clip.setMicrosecondPosition((long) (clip.getMicrosecondLength() * musicBar.getValue() / 100));
+                        }
+                    });
+                }
+            }
+        };
     }
 }
