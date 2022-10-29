@@ -26,11 +26,7 @@ public class PlayerPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     playMusic();
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                } catch (UnsupportedAudioFileException ex) {
-                    throw new RuntimeException(ex);
-                } catch (IOException ex) {
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
