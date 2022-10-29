@@ -71,16 +71,20 @@ public class PlayerPanel {
     }
 
     private void playMusic() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
-        File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-        clip = AudioSystem.getClip();
-        if (!clip.isRunning()) {
+        if (clip == null) {
+            File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
             clip.open(audioStream);
-            clip.start();
-            timer();
         } else {
-            pauseMusic();
+            clip.close();
+            File file = new File(Objects.requireNonNull(favouriteTracks.getSelectionPath()).getLastPathComponent().toString());
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
         }
+        clip.start();
+        timer();
     }
 
     public void loadFiles(String directory) {

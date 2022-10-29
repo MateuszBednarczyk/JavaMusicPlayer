@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dfd9814-8793-4a6f-b0b2-009d8dbf9b05" name="Changes" comment="init app">
+    <list default="true" id="5dfd9814-8793-4a6f-b0b2-009d8dbf9b05" name="Changes" comment="file directories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlayerPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayerPanel.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PlayerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayerPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TabControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TabControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +73,8 @@
       <workItem from="1666975651433" duration="3447000" />
       <workItem from="1666979963472" duration="2200000" />
       <workItem from="1666987156750" duration="210000" />
-      <workItem from="1667037989546" duration="2653000" />
+      <workItem from="1667037989546" duration="2926000" />
+      <workItem from="1667045590599" duration="561000" />
     </task>
     <task id="LOCAL-00001" summary="init app">
       <created>1666961860583</created>
@@ -87,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666961860583</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="file directories">
+      <created>1667041419449</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1667041419449</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +109,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init app" />
-    <option name="LAST_COMMIT_MESSAGE" value="init app" />
+    <MESSAGE value="file directories" />
+    <option name="LAST_COMMIT_MESSAGE" value="file directories" />
   </component>
 </project>
